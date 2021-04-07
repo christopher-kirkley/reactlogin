@@ -22,7 +22,19 @@ function Login() {
 		e.preventDefault()
 		const email = e.target.email.value
 		const password = e.target.password.value
+
+		fetch('http://localhost:5000/login', {
+			method: 'POST',
+			headers: {
+     'Authorization': 'Basic '+btoa(`${email}:${password}`)
+			}
+		})
+		.then(res => res.json())
+		.then(json => console.log(json))
+
 	}
+		
+	
 
 	return (
 		<div>
