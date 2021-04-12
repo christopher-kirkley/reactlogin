@@ -1,5 +1,8 @@
+import React, { useState } from 'react'
+
 import logo from './logo.svg';
 import './App.css';
+import './Token.js';
 
 import { 
 	Drawer,
@@ -18,6 +21,8 @@ import {
 
 function Login() {
 
+	const [ jwt, setJwt ] = useState('')
+
 	function handleSubmit(e) {
 		e.preventDefault()
 		const email = e.target.email.value
@@ -30,7 +35,8 @@ function Login() {
 			}
 		})
 		.then(res => res.json())
-		.then(json => console.log(json))
+		.then(json => setJwt(json['token']))
+		.then(res => console.log(jwt))
 
 	}
 		
