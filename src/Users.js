@@ -23,9 +23,17 @@ function Users() {
 	const [ users, setUsers ] = useState([])
 
 	useEffect(() => {
-		fetch('http://localhost:5000/user')
-		.then(res => console.log(res))
-		.catch(err => console.log(err))
+		fetch('http://localhost:5000/user', {
+			credentials: 'include'
+		})
+		.then(res => {
+			if( !res.ok ) {
+				return {'users': users}
+			} else {
+				return res.json()
+			}
+		})
+		.then(data => setUsers(data['users']))
 	}, []
 	)
 		
@@ -34,22 +42,18 @@ function Users() {
 	return (
 		<div>
 		<h1>Users</h1>
+		{ users.map((user) => {
+			return [
+				<li>{user.name} - {user.password}</li>
+			]
+
+		})}
 		<Paper>
 		</Paper>
 		</div>
 	)
 
 
-  // return (
-  //   <div className="App">
-			// <AppBar position="static">
-				// <Toolbar>
-					// <Button onClick={handleLogin} color="inherit">Login</Button>
-					// <Button onClick={handleRegister} color="inherit">Register</Button>
-				// </Toolbar>
-			// </AppBar>
-  //   </div>
-  // );
 }
 
 export default Users

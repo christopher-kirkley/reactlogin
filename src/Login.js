@@ -29,14 +29,13 @@ function Login() {
 		const password = e.target.password.value
 
 		fetch('http://localhost:5000/login', {
+			credentials: 'include',
 			method: 'POST',
 			headers: {
      'Authorization': 'Basic '+btoa(`${email}:${password}`)
 			}
 		})
-		.then(res => res.json())
-		.then(json => setJwt(json['token']))
-		.then(res => console.log(jwt))
+		.then(res => console.log(res))
 
 	}
 		
