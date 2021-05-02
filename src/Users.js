@@ -8,7 +8,11 @@ import {
 	Paper,
 } from "@material-ui/core"
 
-function Users() {
+import { useHistory } from "react-router-dom";
+
+function Users(props) {
+
+	const history = useHistory()
 
 	const [ users, setUsers ] = useState([])
 
@@ -19,7 +23,9 @@ function Users() {
 		})
 		.then(res => {
 			if( !res.ok ) {
-				return {'users': users}
+				props.setAuth(false)
+				history.push('/login')
+				return []
 			} else {
 				return res.json()
 			}
@@ -33,12 +39,15 @@ function Users() {
 	return (
 		<div>
 		<h1>Users</h1>
-		{ users.map((user) => {
+		{ users ?
+			users.map((user) => {
 			return [
 				<li>{user.name} - {user.password}</li>
 			]
 
-		})}
+		})
+		:
+		null}
 		<Paper>
 		</Paper>
 		</div>

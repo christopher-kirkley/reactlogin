@@ -14,7 +14,7 @@ import {
 	TextField,
 } from "@material-ui/core"
 
-function Login() {
+function Login(props) {
 
 
 	useEffect(() => {
@@ -38,6 +38,7 @@ function Login() {
 			if (!res.ok) {
 			}
 			else {
+				props.setAuth(true)
 			}
 		})
 		.catch(err => console.log('error'))
@@ -49,6 +50,11 @@ function Login() {
 	return (
 		<div>
 		<h1>Login</h1>
+		{props.auth ?
+			<h1>logged in</h1>
+			:
+			null
+		}
 		<Paper>
 		<form onSubmit={handleSubmit}>
 		<Grid
