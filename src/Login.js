@@ -1,18 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Cookies from 'js-cookie'
 
-import logo from './logo.svg';
 import './App.css';
 import './Token.js';
 
-import AuthContext from './AuthContext'
 
 import { 
-	Drawer,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
 	Typography,
 	Button,
 	Paper,
@@ -23,12 +15,6 @@ import {
 } from "@material-ui/core"
 
 function Login() {
-
-	const [ jwt, setJwt ] = useState('')
-
-	const [ loggedIn, setLoggedIn ] = useState('no')
-
-	const auth = useContext(AuthContext)
 
 
 	useEffect(() => {
@@ -52,7 +38,6 @@ function Login() {
 			if (!res.ok) {
 			}
 			else {
-				Cookies.set('login', 'true')
 			}
 		})
 		.catch(err => console.log('error'))
@@ -66,7 +51,6 @@ function Login() {
 		<h1>Login</h1>
 		<Paper>
 		<form onSubmit={handleSubmit}>
-				{ loggedIn }
 		<Grid
 			container
 			direction="column"

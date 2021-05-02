@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 import logo from './logo.svg';
 import './App.css';
 
 import { 
-	Drawer,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
-	Typography,
-	Button,
 	Paper,
-	Container,
-	AppBar,
-	Grid,
-	TextField,
 } from "@material-ui/core"
 
 function Users() {
