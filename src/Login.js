@@ -3,6 +3,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import './App.css';
 import './Token.js';
 
+import { UserContext } from './hooks/UserContext'
+
 
 import { 
 	Typography,
@@ -14,8 +16,9 @@ import {
 	TextField,
 } from "@material-ui/core"
 
-function Login(props) {
+function Login() {
 
+	const { user, setUser } = useContext(UserContext)
 
 	useEffect(() => {
 	}, []
@@ -38,62 +41,51 @@ function Login(props) {
 			if (!res.ok) {
 			}
 			else {
-				props.setAuth(true)
+				setUser(true)
 			}
 		})
 		.catch(err => console.log('error'))
 
 	}
 		
-	
 
 	return (
-		<div>
-		<h1>Login</h1>
-		{props.auth ?
-			<h1>logged in</h1>
-			:
-			null
-		}
-		<Paper>
-		<form onSubmit={handleSubmit}>
-		<Grid
-			container
-			direction="column"
-			alignItems="center"
-			spacing={2}>
-			<Grid item xs={12}>
-				<TextField id="email" label="Email"/>
-			</Grid>
-			<Grid item>
-				<TextField id="password" label="Password"/>
-			</Grid>
-			<Grid item>
-				<Button
-					color="primary"
-					variant="outlined"
-					type="submit"
-					>
-					Submit
-				</Button>
-			</Grid>
-		</Grid>
-		</form>
-		</Paper>
-		</div>
-	)
+				<div>
+				<h1>Login</h1>
+				{ user ?
+					<h1>logged in</h1>
+					:
+					null
+				}
+				<Paper>
+				<form onSubmit={handleSubmit}>
+				<Grid
+					container
+					direction="column"
+					alignItems="center"
+					spacing={2}>
+					<Grid item xs={12}>
+						<TextField id="email" label="Email"/>
+					</Grid>
+					<Grid item>
+						<TextField id="password" label="Password"/>
+					</Grid>
+					<Grid item>
+						<Button
+							color="primary"
+							variant="outlined"
+							type="submit"
+							>
+							Submit
+						</Button>
+					</Grid>
+				</Grid>
+				</form>
+				</Paper>
+				</div>
+			)
 
 
-  // return (
-  //   <div className="App">
-			// <AppBar position="static">
-				// <Toolbar>
-					// <Button onClick={handleLogin} color="inherit">Login</Button>
-					// <Button onClick={handleRegister} color="inherit">Register</Button>
-				// </Toolbar>
-			// </AppBar>
-  //   </div>
-  // );
 }
 
 export default Login;

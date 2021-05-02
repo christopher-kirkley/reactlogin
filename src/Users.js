@@ -23,8 +23,6 @@ function Users(props) {
 		})
 		.then(res => {
 			if( !res.ok ) {
-				props.setAuth(false)
-				history.push('/login')
 				return []
 			} else {
 				return res.json()
