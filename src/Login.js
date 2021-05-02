@@ -5,6 +5,7 @@ import './Token.js';
 
 import { UserContext } from './hooks/UserContext'
 
+import { useHistory } from "react-router-dom";
 
 import { 
 	Typography,
@@ -19,6 +20,8 @@ import {
 function Login() {
 
 	const { user, setUser } = useContext(UserContext)
+
+	const history = useHistory()
 
 	useEffect(() => {
 	}, []
@@ -42,6 +45,7 @@ function Login() {
 			}
 			else {
 				setUser(true)
+				history.push('/dashboard')
 			}
 		})
 		.catch(err => console.log('error'))

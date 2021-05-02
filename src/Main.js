@@ -6,6 +6,7 @@ import './App.css';
 import Login from './Login'
 import Register from './Register'
 import Users from './Users'
+import Dashboard from './Dashboard'
 
 import UserContextProvider from './hooks/UserContext'
 import { UserContext } from './hooks/UserContext'
@@ -42,7 +43,9 @@ function Main() {
 					<Toolbar>
 					{ user ?
 						<React.Fragment>
-							<Button onClick={handleLogout} color="inherit">Logout</Button>
+							<Button component={Link} to='/dashboard' color="inherit">Dashboard</Button>
+							<Button component={Link} to='/users' color="inherit">Users</Button>
+							<Button onClick={handleLogout} component={Link} to='/login' color="inherit">Logout</Button>
 						</React.Fragment>
 						:
 						<React.Fragment>
@@ -57,6 +60,9 @@ function Main() {
 					</Switch>
 					<Switch>
 						<Route exact path="/login" component={Login}/>
+					</Switch>
+					<Switch>
+						<Route exact path="/dashboard" component={Dashboard}/>
 					</Switch>
 					<Switch>
 						<Route exact path="/users" component={Users}/>
