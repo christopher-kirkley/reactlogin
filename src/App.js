@@ -1,4 +1,5 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
+
 import './App.css';
 
 import Login from './Login'
@@ -9,6 +10,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+	Redirect,
   Link,
 	useHistory
 } from "react-router-dom";
@@ -31,6 +33,26 @@ import {
 
 function App() {
 
+  const [user, setUser] = useState(false)
+
+
+	const ProtectedRoute = ({ component: Component, user, ...rest }) => {
+  return (
+    <Route {...rest} render={
+      props => {
+				if (user) {
+					return <Component {...rest} {...props} />
+				} else {
+					return <Redirect to={
+						{
+							pathname: '/login',
+						}
+					} />
+				}
+			}
+		} />
+		)
+	}
 
 
 	return (
@@ -38,7 +60,11 @@ function App() {
 		<Router>
 			<AppBar position="static">
 				<Toolbar>
+				{ user ?
 					<Button component={Link} to='/users' color="inherit">Users</Button>
+					:
+					null
+				}
 					<Button component={Link} to='/login' color="inherit">Login</Button>
 					<Button component={Link} to='/register' color="inherit">Register</Button>
 				</Toolbar>
@@ -50,7 +76,7 @@ function App() {
 			<Route exact path="/register" component={Register}/>
 		</Switch>
 		<Switch>
-			<Route exact path="/users" component={Users}/>
+			<ProtectedRoute exact path="/users" component={Users}/>
 		</Switch>
 		</Router>
 		</div>

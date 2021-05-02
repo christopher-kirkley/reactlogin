@@ -22,6 +22,7 @@ function Users() {
 
 	const [ users, setUsers ] = useState([])
 
+
 	useEffect(() => {
 		fetch('http://localhost:5000/user', {
 			credentials: 'include'

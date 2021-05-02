@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import Cookies from 'js-cookie'
 
 import logo from './logo.svg';
 import './App.css';
 import './Token.js';
+
+import AuthContext from './AuthContext'
 
 import { 
 	Drawer,
@@ -23,6 +26,15 @@ function Login() {
 
 	const [ jwt, setJwt ] = useState('')
 
+	const [ loggedIn, setLoggedIn ] = useState('no')
+
+	const auth = useContext(AuthContext)
+
+
+	useEffect(() => {
+	}, []
+	)
+
 	function handleSubmit(e) {
 		e.preventDefault()
 		const email = e.target.email.value
@@ -35,7 +47,15 @@ function Login() {
      'Authorization': 'Basic '+btoa(`${email}:${password}`)
 			}
 		})
-		.then(res => console.log(res))
+		.then(res => {
+			console.log(res)
+			if (!res.ok) {
+			}
+			else {
+				Cookies.set('login', 'true')
+			}
+		})
+		.catch(err => console.log('error'))
 
 	}
 		
@@ -46,6 +66,7 @@ function Login() {
 		<h1>Login</h1>
 		<Paper>
 		<form onSubmit={handleSubmit}>
+				{ loggedIn }
 		<Grid
 			container
 			direction="column"
