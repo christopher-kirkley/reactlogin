@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Cookies from 'js-cookie'
 
 import logo from './logo.svg';
@@ -10,17 +10,19 @@ import {
 
 import { useHistory } from "react-router-dom";
 
+import { UserContext } from './hooks/UserContext'
+
 function Users(props) {
 
 	const history = useHistory()
 
 	const [ users, setUsers ] = useState([])
 
+	const { user, setUser } = useContext(UserContext)
 
 	useEffect(() => {
-		fetch('http://localhost:5000/user', {
-			credentials: 'include'
-		})
+		fetch('http://localhost:5000/user',
+			{credentials: 'include'})
 		.then(res => {
 			if( !res.ok ) {
 				return []

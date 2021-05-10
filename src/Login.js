@@ -39,16 +39,21 @@ function Login() {
      'Authorization': 'Basic '+btoa(`${email}:${password}`)
 			}
 		})
-		.then(res => {
-			console.log(res)
-			if (!res.ok) {
-			}
-			else {
-				setUser(true)
-				history.push('/dashboard')
-			}
-		})
-		.catch(err => console.log('error'))
+		.then(res => console.log(res))
+		.then(res => setUser(true))
+		
+		// .then(res => {
+		// 	console.log(res)
+		// 	if (!res.ok) {
+		// 	}
+		// 	else {
+		// 		console.log(res)
+		// 		setUser(truek
+
+		// 		history.push('/dashboard')
+		// 	}
+		// })
+		// .catch(err => console.log('error'))
 
 	}
 		
