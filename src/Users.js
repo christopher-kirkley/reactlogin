@@ -22,8 +22,10 @@ function Users(props) {
 
 	useEffect(() => {
 		fetch('http://localhost:5000/user',
-			{credentials: 'include'})
-		.then(res => {
+			{
+				credentials: 'include',
+			})
+			.then(res => {
 			if( !res.ok ) {
 				return []
 			} else {

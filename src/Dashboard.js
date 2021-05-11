@@ -15,6 +15,22 @@ function Dashboard() {
 
 	const history = useHistory()
 
+	useEffect(() => {
+		fetch('http://localhost:5000/dashboard',
+			{
+				headers: {'Bearer': Cookies.get('access_token_cookie')}
+			})
+			.then(res => {
+			if( !res.ok ) {
+				return []
+			} else {
+				return res.json()
+			}
+		})
+		.then(data => console.log(data))
+	}, []
+
+	)
 	return (
 		<div>
 		<h1>Dashboard</h1>
