@@ -8,9 +8,6 @@ import Register from './Register'
 import Users from './Users'
 import Dashboard from './Dashboard'
 
-import UserContextProvider from './hooks/UserContext'
-import { UserContext } from './hooks/UserContext'
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -30,18 +27,37 @@ import {
 
 function Main() {
 
-	const { user, setUser } = useContext(UserContext)
-
 	function handleLogout() {
-		setUser(false)
+		sessionStorage.removeItem('session')
 	}
+
+	function isAuthenticated() {
+		let data = sessionStorage.getItem('session')
+		if (data) {
+			return true
+		}
+		else {
+			return false
+		}
+	}
+
+	useEffect(() => {
+		console.log('ho')
+	}, [])
+
+	const ProtectedRoute = ({isEnabled, ...props}) => {
+    return (isEnabled) ? <Route {...props} /> : <Redirect to="/login"/>;
+	};
+
+	window.addEventListener('sessionStorage',e => console.log(e))
 
 	return (
     <div className="Main">
 			<Router>
 				<AppBar position="static">
 					<Toolbar>
-					{ user ?
+					{	isAuthenticated()
+						?
 						<React.Fragment>
 							<Button component={Link} to='/dashboard' color="inherit">Dashboard</Button>
 							<Button component={Link} to='/users' color="inherit">Users</Button>
@@ -62,7 +78,7 @@ function Main() {
 						<Route exact path="/login" component={Login}/>
 					</Switch>
 					<Switch>
-						<Route exact path="/dashboard" component={Dashboard}/>
+						<Route exact path="/dashboard" component={Dashboard} />
 					</Switch>
 					<Switch>
 						<Route exact path="/users" component={Users}/>

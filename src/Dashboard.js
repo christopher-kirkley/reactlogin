@@ -13,21 +13,25 @@ import { useHistory } from "react-router-dom";
 
 function Dashboard() {
 
+	const [ msg, setMsg ] = useState('')
+
 	const history = useHistory()
 
 	useEffect(() => {
 		fetch('http://localhost:5000/dashboard',
 			{
-				headers: {'Bearer': Cookies.get('access_token_cookie')}
+				credentials: 'include',
 			})
 			.then(res => {
 			if( !res.ok ) {
+				sessionStorage.removeItem('session')
+				history.push('/login')
 				return []
 			} else {
 				return res.json()
 			}
 		})
-		.then(data => console.log(data))
+		.then(data => setMsg(data['msg'])) 
 	}, []
 
 	)
@@ -35,7 +39,7 @@ function Dashboard() {
 		<div>
 		<h1>Dashboard</h1>
 		<Paper>
-		<Typography>Welcome, you are logged in</Typography>
+		<Typography>{msg}</Typography>
 		</Paper>
 		</div>
 	)

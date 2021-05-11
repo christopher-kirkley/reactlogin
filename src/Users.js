@@ -10,21 +10,18 @@ import {
 
 import { useHistory } from "react-router-dom";
 
-import { UserContext } from './hooks/UserContext'
-
 function Users(props) {
 
 	const history = useHistory()
 
 	const [ users, setUsers ] = useState([])
 
-	const { user, setUser } = useContext(UserContext)
-
 	useEffect(() => {
 		fetch('http://localhost:5000/user',
 			{method: 'get', credentials: 'include'})
 		.then(res => {
 			if( !res.ok ) {
+				sessionStorage.removeItem('session')
 				return []
 			} else {
 				return res.json()

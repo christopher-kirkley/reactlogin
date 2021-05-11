@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import './App.css';
 import './Token.js';
 
-import { UserContext } from './hooks/UserContext'
+import { SessionContext } from './hooks/SessionContext'
 
 import { useHistory } from "react-router-dom";
 
@@ -19,7 +19,7 @@ import {
 
 function Login() {
 
-	const { user, setUser } = useContext(UserContext)
+	const { session, setSession } = useContext(SessionContext)
 
 	const history = useHistory()
 
@@ -40,7 +40,10 @@ function Login() {
 			}
 		})
 		.then(res => console.log(res))
-		.then(res => setUser(true))
+		.then(res => {
+			history.push('/dashboard')
+			sessionStorage.setItem('session', 'true')
+		})
 		
 		// .then(res => {
 		// 	console.log(res)
@@ -61,7 +64,7 @@ function Login() {
 	return (
 				<div>
 				<h1>Login</h1>
-				{ user ?
+				{ session ?
 					<h1>logged in</h1>
 					:
 					null
