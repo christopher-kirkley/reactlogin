@@ -14,7 +14,6 @@ import {
   Route,
 	Redirect,
   Link,
-	useHistory
 } from "react-router-dom";
 
 
@@ -27,23 +26,46 @@ import {
 
 import { SessionContext } from './hooks/SessionContext'
 
+// import HandleLogout from './hooks/HandleLogout'
+
 function Main() {
+
+
+	// useEffect(() => {
+	// 	let data = Cookies.get('session')
+	// 	if (data == 'true') {
+	// 		setSession(true)
+	// 	}
+	// 	if (data == 'false') {
+	// 		setSession(false)
+	// 	}
+	// 	else {
+	// 		Cookies.set('session', false)
+	// 	}
+	// }, [])
+
 
 	const { session, setSession } = useContext(SessionContext)
 
 	function handleLogout() {
-		Cookies.remove('session')
+		let data = Cookies.get('session')
+		if (data) {
+			fetch('http://localhost:5000/logout',
+				{credentials: 'include', method: 'POST'}
+			)
+		}
 		setSession(false)
-		// api call to logout route
 	}
 
 	function isAuthenticated() {
 		let data = Cookies.get('session')
-		if (data) {
+		if (data == 'true') {
 			setSession(true)
+			return true
 		}
 		else {
-			setSession(false)
+			handleLogout()
+			return false
 		}
 	}
 
@@ -51,9 +73,9 @@ function Main() {
 		isAuthenticated()
 	}, 3000)
 
-	// const ProtectedRoute = ({isEnabled, ...props}) => {
-    // return (isEnabled) ? <Route {...props} /> : <Redirect to="/login"/>;
-	// };
+	const ProtectedRoute = ({isEnabled, ...props}) => {
+    return (isEnabled) ? <Route {...props} /> : <Redirect to="/login"/>;
+	};
 
 	// window.addEventListener('sessionStorage',e => console.log(e))
 
@@ -84,10 +106,10 @@ function Main() {
 						<Route exact path="/login" component={Login}/>
 					</Switch>
 					<Switch>
-						<Route exact path="/dashboard" component={Dashboard} />
+						<ProtectedRoute exact path="/dashboard" component={Dashboard} isEnabled={isAuthenticated()}/>
 					</Switch>
 					<Switch>
-						<Route exact path="/users" component={Users}/>
+						<ProtectedRoute exact path="/users" component={Users} isEnabled={isAuthenticated()}/>
 					</Switch>
 			</Router>
 		</div>

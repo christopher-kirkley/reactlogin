@@ -21,7 +21,6 @@ function Users(props) {
 			{method: 'get', credentials: 'include'})
 		.then(res => {
 			if( !res.ok ) {
-				sessionStorage.removeItem('session')
 				return []
 			} else {
 				return res.json()

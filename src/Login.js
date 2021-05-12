@@ -38,8 +38,8 @@ function Login() {
 		})
 		.then(res => console.log(res))
 		.then(res => {
-			history.push('/dashboard')
 			setSession(true)
+			history.push('/dashboard')
 		})
 		
 	}

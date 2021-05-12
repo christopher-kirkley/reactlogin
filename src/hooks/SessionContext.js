@@ -9,14 +9,15 @@ function SessionContextProvider(props) {
 
 	useEffect(() => {
 		let data = Cookies.get('session')
-		if (data) {
-		setSession(true)
+		if (data == 'true') {
+			setSession(true)
+		}
+		if (data == 'false') {
+			setSession(false)
 		}
 		else {
 			setSession(false)
 		}
-		console.log(data)
-		console.log(session)
 	}, [])
 
 	return (
