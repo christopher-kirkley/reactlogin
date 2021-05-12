@@ -25,38 +25,44 @@ import {
 	Toolbar,
 } from "@material-ui/core"
 
+import { SessionContext } from './hooks/SessionContext'
+
 function Main() {
 
+	const { session, setSession } = useContext(SessionContext)
+
 	function handleLogout() {
-		sessionStorage.removeItem('session')
+		Cookies.remove('session')
+		setSession(false)
+		// api call to logout route
 	}
 
 	function isAuthenticated() {
-		let data = sessionStorage.getItem('session')
+		let data = Cookies.get('session')
 		if (data) {
-			return true
+			setSession(true)
 		}
 		else {
-			return false
+			setSession(false)
 		}
 	}
 
-	useEffect(() => {
-		console.log('ho')
-	}, [])
+	setInterval(() => {
+		isAuthenticated()
+	}, 3000)
 
-	const ProtectedRoute = ({isEnabled, ...props}) => {
-    return (isEnabled) ? <Route {...props} /> : <Redirect to="/login"/>;
-	};
+	// const ProtectedRoute = ({isEnabled, ...props}) => {
+    // return (isEnabled) ? <Route {...props} /> : <Redirect to="/login"/>;
+	// };
 
-	window.addEventListener('sessionStorage',e => console.log(e))
+	// window.addEventListener('sessionStorage',e => console.log(e))
 
 	return (
     <div className="Main">
 			<Router>
 				<AppBar position="static">
 					<Toolbar>
-					{	isAuthenticated()
+					{	session
 						?
 						<React.Fragment>
 							<Button component={Link} to='/dashboard' color="inherit">Dashboard</Button>

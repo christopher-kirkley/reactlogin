@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
+import Cookies from "js-cookie";
 
 export const SessionContext = createContext(null)
 
@@ -7,7 +8,7 @@ function SessionContextProvider(props) {
 	const [ session, setSession ] = useState(false)
 
 	useEffect(() => {
-		let data = sessionStorage.getItem('session')
+		let data = Cookies.get('session')
 		if (data) {
 		setSession(true)
 		}
@@ -15,7 +16,8 @@ function SessionContextProvider(props) {
 			setSession(false)
 		}
 		console.log(data)
-	}, [session])
+		console.log(session)
+	}, [])
 
 	return (
 		<SessionContext.Provider value={{session, setSession}}>

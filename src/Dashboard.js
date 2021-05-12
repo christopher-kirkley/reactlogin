@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Cookies from 'js-cookie'
 
 import logo from './logo.svg';
@@ -10,8 +10,11 @@ import {
 } from "@material-ui/core"
 
 import { useHistory } from "react-router-dom";
+import { SessionContext } from './hooks/SessionContext'
 
 function Dashboard() {
+
+	const { session, setSession } = useContext(SessionContext)
 
 	const [ msg, setMsg ] = useState('')
 
@@ -24,7 +27,6 @@ function Dashboard() {
 			})
 			.then(res => {
 			if( !res.ok ) {
-				sessionStorage.removeItem('session')
 				history.push('/login')
 				return []
 			} else {

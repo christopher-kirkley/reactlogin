@@ -23,9 +23,6 @@ function Login() {
 
 	const history = useHistory()
 
-	useEffect(() => {
-	}, []
-	)
 
 	function handleSubmit(e) {
 		e.preventDefault()
@@ -42,22 +39,9 @@ function Login() {
 		.then(res => console.log(res))
 		.then(res => {
 			history.push('/dashboard')
-			sessionStorage.setItem('session', 'true')
+			setSession(true)
 		})
 		
-		// .then(res => {
-		// 	console.log(res)
-		// 	if (!res.ok) {
-		// 	}
-		// 	else {
-		// 		console.log(res)
-		// 		setUser(truek
-
-		// 		history.push('/dashboard')
-		// 	}
-		// })
-		// .catch(err => console.log('error'))
-
 	}
 		
 
